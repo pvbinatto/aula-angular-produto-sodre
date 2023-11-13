@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Produto } from './produto.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProdutoService } from './service/produto.service';
 
 @Component({
   selector: 'app-produto',
   templateUrl: './produto.component.html',
-  styleUrls: ['./produto.component.scss']
+  styleUrls: ['./produto.component.scss'],
 })
 export class ProdutoComponent implements OnInit {
-
-  constructor(private fb: FormBuilder){}
+  constructor(
+    private fb: FormBuilder,
+    private produtoService: ProdutoService
+  ) {}
 
   dataSource: Produto[] = [];
   displayedColumns: string[] = [
@@ -18,20 +21,14 @@ export class ProdutoComponent implements OnInit {
     'name',
     'stock',
     'cost',
-    'price'
-  ]
+    'price',
+  ];
 
-  dados: Produto[] = [
-    {'id': 'r445435345345j3j453j45h34j5h435', 'sku': '1234', 'name': 'Água Mineral', 'stock': 10, 'cost': 1.5, 'price': 20},
-    {'id': 'r445435345345j3j453j45h34j5h435', 'sku': '123456', 'name': 'Água Mineral com Gás', 'stock': 30, 'cost': 1.7, 'price': 25},
-  ]
+  form!: FormGroup;
 
-  form!: FormGroup
-
-  typeAdd: boolean = true
+  typeAdd: boolean = false;
 
   ngOnInit(): void {
-    this.dataSource = this.dados
 
     this.form = this.fb.group({
       id: [null],
@@ -39,23 +36,69 @@ export class ProdutoComponent implements OnInit {
       name: [null, Validators.required],
       stock: [null],
       cost: [null, Validators.required],
-      price: [null, Validators.required]
-    })
+      price: [null, Validators.required],
+    });
+
+    this.listarProdutos()
   }
 
-  salvar(){
-
-  }
-
-  listarProdutos(){
-
-  }
-
-  addProduto(){
+  editar(produto: Produto){
+    this.form.patchValue(produto)
     this.typeAdd = true
   }
 
-  search(){
-    this.typeAdd = false
+  remover(id: string){
+    this.produtoService.delete(id).subscribe(retorno => {
+      if(retorno){
+        this.listarProdutos()
+      }
+      
+    })
+  }
+
+  salvar() {
+
+    if(this.form.valid){
+      let dados = this.form.value as Produto;
+      
+      if(!dados.id){
+        this.inserir(dados)
+      } else {
+        this.atualizar(dados)
+      }
+
+    } else {
+      this.form.markAllAsTouched()
+      this.form.updateValueAndValidity()
+    }
+
+  }
+
+  inserir(objeto: Produto){
+    this.produtoService.inserir(objeto).subscribe(retorno => {
+      this.listarProdutos()
+      this.typeAdd = false
+    })
+  }
+
+  atualizar(objeto: Produto){
+    this.produtoService.editar(objeto).subscribe(retorno => {
+      this.listarProdutos()
+      this.typeAdd = false
+    })
+  }
+
+  listarProdutos() {
+    this.produtoService.listarTodos().subscribe(retorno => {
+      this.dataSource = retorno
+    })
+  }
+
+  addProduto() {
+    this.typeAdd = true;
+  }
+
+  search() {
+    this.typeAdd = false;
   }
 }

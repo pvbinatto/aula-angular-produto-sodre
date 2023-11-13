@@ -11,11 +11,13 @@ import { MatIconModule } from '@angular/material/icon';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule, } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, ProdutoComponent],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,

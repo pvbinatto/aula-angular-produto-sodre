@@ -45,14 +45,16 @@
                         <button
                           mat-icon-button
                           color="primary"
-                          aria-label="Example icon button with a home icon"
+                          aria-label=""
+                          (click)="remover(element.id)"
                         >
                           <mat-icon>delete</mat-icon>
                         </button>
                         <button
                           mat-icon-button
                           color="primary"
-                          aria-label="Example icon button with a home icon"
+                          (click)="editar(element)"
+                          aria-label=""
                         >
                           <mat-icon>edit</mat-icon>
                         </button>
@@ -105,6 +107,7 @@
             </div>
           </div>
 
+          <!-- Tela de Cadastro -->
           <div class="container-fluid" *ngIf="typeAdd">
             <div class="row">
               <div class="col-12">
