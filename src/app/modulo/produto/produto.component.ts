@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Produto } from './produto.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProdutoService } from './service/produto.service';
+import { UtilService } from 'src/app/core/services/util.service';
 
 @Component({
   selector: 'app-produto',
@@ -9,9 +10,11 @@ import { ProdutoService } from './service/produto.service';
   styleUrls: ['./produto.component.scss'],
 })
 export class ProdutoComponent implements OnInit {
+
   constructor(
     private fb: FormBuilder,
-    private produtoService: ProdutoService
+    private produtoService: ProdutoService,
+    private utilService: UtilService
   ) {}
 
   dataSource: Produto[] = [];
@@ -47,13 +50,23 @@ export class ProdutoComponent implements OnInit {
     this.typeAdd = true
   }
 
-  remover(id: string){
-    this.produtoService.delete(id).subscribe(retorno => {
-      if(retorno){
-        this.listarProdutos()
-      }
-      
-    })
+  async remover(id: string){
+
+    let confirm = await this.utilService.alertConfirmation(
+      'Deseja remover o produto?'
+    );
+
+    if (confirm.isConfirmed) {
+      this.produtoService.delete(id).subscribe(retorno => {
+        if(retorno){
+          this.listarProdutos()
+          this.utilService.success('', 'Produto removido com sucesso.')
+        }
+        
+      })
+    }
+
+    
   }
 
   salvar() {
@@ -76,15 +89,20 @@ export class ProdutoComponent implements OnInit {
 
   inserir(objeto: Produto){
     this.produtoService.inserir(objeto).subscribe(retorno => {
+      this.utilService.success('Sucesso!', 'Registro gravado.');
       this.listarProdutos()
       this.typeAdd = false
+      this.form.reset()
     })
   }
 
   atualizar(objeto: Produto){
     this.produtoService.editar(objeto).subscribe(retorno => {
+      // this.utilService.success('Sucesso!', 'Registro gravado.');
+      this.utilService.alertToastr('Registro gravado com sucesso')
       this.listarProdutos()
       this.typeAdd = false
+      this.form.reset()
     })
   }
 
@@ -96,6 +114,7 @@ export class ProdutoComponent implements OnInit {
 
   addProduto() {
     this.typeAdd = true;
+    this.form.reset()
   }
 
   search() {

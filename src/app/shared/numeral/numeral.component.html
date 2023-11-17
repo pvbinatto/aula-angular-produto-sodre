@@ -1,0 +1,12 @@
+<div [formGroup]="form">
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label>{{ titulo }}</mat-label>
+    <input
+      matInput
+      currencyMask
+      [options]="{ prefix: '', thousands: '', decimal: '.' }"
+      [placeholder]="placeholder"
+      [formControlName]="controlName"
+    />
+  </mat-form-field>
+</div>

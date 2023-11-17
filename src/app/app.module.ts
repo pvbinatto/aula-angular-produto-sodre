@@ -12,6 +12,11 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule, } from '@angular/mat
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+import { InputComponent } from './shared/input/input.component';
+import { MonetarioComponent } from './shared/monetario/monetario.component';
+import { NumeralComponent } from './shared/numeral/numeral.component';
+import { BotaoComponent } from './shared/botao/botao.component';
 
 @NgModule({
   declarations: [AppComponent, ProdutoComponent],
@@ -26,7 +31,12 @@ import { HttpClientModule } from '@angular/common/http';
     MatTableModule,
     MatIconModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    ToastrModule.forRoot(),
+    InputComponent,
+    MonetarioComponent,
+    NumeralComponent,
+    BotaoComponent
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {floatLabel: 'always'}}

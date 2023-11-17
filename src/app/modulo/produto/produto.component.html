@@ -42,22 +42,16 @@
                     <th mat-header-cell *matHeaderCellDef width="130">Ação</th>
                     <td mat-cell *matCellDef="let element">
                       <div>
-                        <button
-                          mat-icon-button
-                          color="primary"
-                          aria-label=""
-                          (click)="remover(element.id)"
-                        >
-                          <mat-icon>delete</mat-icon>
-                        </button>
-                        <button
-                          mat-icon-button
-                          color="primary"
-                          (click)="editar(element)"
-                          aria-label=""
-                        >
-                          <mat-icon>edit</mat-icon>
-                        </button>
+                        <app-botao
+                        cor="primary"
+                        icone="delete"
+                        (retorno)="remover(element.id)"
+                        ></app-botao>
+                        <app-botao
+                        cor="primary"
+                        icone="edit"
+                        (click)="editar(element)"
+                        ></app-botao>
                       </div>
                     </td>
                   </ng-container>
@@ -114,36 +108,41 @@
                 <form [formGroup]="form">
                   <div class="row">
                     <div class="col-2">
-                      <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Sku</mat-label>
-                        <input matInput placeholder="" formControlName="sku" />
-                      </mat-form-field>
+                      <app-input
+                      [form]="form"
+                      controlName="sku"
+                      titulo="Sku"
+                      ></app-input>
                     </div>
                     <div class="col-10">
-                      <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Nome Produto</mat-label>
-                        <input matInput placeholder="" formControlName="name" />
-                      </mat-form-field>
+                      <app-input
+                      [form]="form"
+                      controlName="name"
+                      titulo="Nome do Produto"
+                      ></app-input>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-4">
-                      <mat-form-field appearance="outline"  class="w-100">
-                        <mat-label>Estoque</mat-label>
-                        <input matInput placeholder="" formControlName="stock" />
-                      </mat-form-field>
+                      <app-numeral
+                      [form]="form"
+                      controlName="stock"
+                      titulo="Estoque"
+                      ></app-numeral>
                     </div>
                     <div class="col-4">
-                      <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Custo</mat-label>
-                        <input matInput placeholder="" formControlName="cost" />
-                      </mat-form-field>
+                      <app-monetario
+                      [form]="form"
+                      controlName="cost"
+                      titulo="Custo"
+                      ></app-monetario>
                     </div>
                     <div class="col-4">
-                      <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Preço</mat-label>
-                        <input matInput placeholder="" formControlName="price" />
-                      </mat-form-field>
+                      <app-monetario
+                      [form]="form"
+                      controlName="price"
+                      titulo="Preço"
+                      ></app-monetario>
                     </div>
                   </div>
                   <div class="row">
