@@ -18,6 +18,7 @@ export class ProdutoService {
   }
 
   inserir(objeto: Produto): Observable<Produto> {
+    objeto.id = (Math.random() + 1).toString(36).substring(7);
     return this.apiService.post(environment.api + this.classController, objeto)
   }
 

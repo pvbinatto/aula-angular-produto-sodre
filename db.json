@@ -1,0 +1,20 @@
+{
+  "products": [
+    {
+      "id": "81dc9bdb52d04dc20036dbd8313ed055",
+      "sku": "1234",
+      "name": "produto teste",
+      "stock": 25,
+      "cost": 15,
+      "price": 30
+    },
+    {
+      "id": "827ccb0eea8a706c4c34a16891f84e7b",
+      "sku": "12345",
+      "name": "teste",
+      "stock": 10,
+      "cost": 20,
+      "price": 30
+    }
+  ]
+}
